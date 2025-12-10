@@ -1,1 +1,83 @@
-<h1>Calculadora</h1>
+<div class="calculadora-container">
+    <h1>Calculadora Fera</h1>
+
+    <form [formGroup]="calculadoraForm" (ngSubmit)="calcular()">
+
+        <label>
+            Primeiro número
+            <input type="number" formControlName="primeiroNumero">
+        </label>
+        
+        <div class="erro" *ngIf="calculadoraForm.get('primeiroNumero')?.invalid && calculadoraForm.get('primeiroNumero')?.touched">
+            O primeiro número é obrigatório.
+        </div>
+
+        <label>
+            Operação
+            <select formControlName="operacao">
+                <option value="">Selecione uma operação</option>
+                <option *ngFor="let op of operacoes" [value]="op.valor">{{ op.nome }}</option>
+            </select>
+        </label>
+
+        <div class="erro" *ngIf="calculadoraForm.get('operacao')?.invalid && calculadoraForm.get('operacao')?.touched">
+            A operação é obrigatória.
+        </div>
+
+        <label>
+            Segundo número
+            <input type="number" formControlName="segundoNumero">
+        </label>
+
+        <div class="erro" *ngIf="calculadoraForm.get('segundoNumero')?.invalid && calculadoraForm.get('segundoNumero')?.touched">
+            O segundo número é obrigatório.
+        </div>
+
+        <button type="submit" [disabled]="calculadoraForm.invalid">
+            Calcular
+        </button>
+    </form>
+
+    <hr>
+    
+    <h2>Resultado: {{ resultado }}</h2>
+
+</div>
+
+<style>
+.calculadora-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 400px;
+    margin: 20px auto;
+}
+label {
+    display: block;
+    margin-bottom: 15px;
+}
+input[type="number"], select {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+.erro {
+    color: red;
+    font-size: 0.8em;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+</style>

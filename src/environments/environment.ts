@@ -1,3 +1,3 @@
 export const environment = {
-  api:'https://localhost:7050', //verificar endereço
+  api: 'http://localhost:5055',
 };

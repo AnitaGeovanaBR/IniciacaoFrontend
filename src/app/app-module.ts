@@ -1,5 +1,7 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { Calculadora } from './paginas/calculadora/calculadora';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -19,6 +21,8 @@ import { Rodape } from './components/rodape/rodape';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
