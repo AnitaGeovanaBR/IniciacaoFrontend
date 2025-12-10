@@ -1,0 +1,142 @@
+.calculadora-container{
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 1.25rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.title-row svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #000000;
+}
+
+.title-row h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #000000;
+}
+
+.calculadora-grid{
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+.resultado{
+  color: #000000;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: center;
+  align-self: flex-start;
+  padding-top: 0.5rem;
+  box-sizing: border-box;
+}
+
+.form-wrapper{
+  flex: 1 1 420px;
+  max-width: 520px;
+  box-sizing: border-box;
+}
+
+form > div{
+  display: flex;
+  flex-direction: column;
+  gap: 0.30rem;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+input[type="number"],
+select{
+  height: 2.5rem;                    
+  padding: 0 0.5rem;                  
+  border-radius: 9px;
+  border: 1px solid rgb(173, 173, 173);
+  font-size: 1.12rem;               
+  width: 100%;
+  background: #ffffff;;
+}
+
+
+input[type="number"]:focus,
+select:focus{
+  border-color: rgba(56, 70, 199, 0.6);
+  box-shadow: 0 0 0 6px rgba(13,110,253,0.06);
+  outline: none;
+}
+
+
+select option{
+  color: #0f172a;
+  background: #ffffff;
+  font-weight: 600;
+}
+
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top: 0.6rem;
+}
+
+button[type="submit"]{
+  margin-top: 1rem;
+  background: #0d6efd;
+  color: rgb(255, 255, 255);
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  width: 100%;
+}
+
+
+button[type="submit"]:hover{
+  box-shadow: 0 10px 20px rgba(14, 13, 13, 0.459);
+  transition: box-shadow 0.5s ease;
+}
+
+@media (max-width: 780px){
+  .calculadora-container{
+    padding: 1rem;
+  }
+
+  .calculadora-grid{
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .resultado{
+    order: 1;
+    flex: none;
+    width: auto;
+    text-align: center;
+    padding-top: 0;
+    margin-left: 0;
+  }
+
+  .form-wrapper{
+    order: 1;
+    max-width: none;
+  }
+
+  input[type="number"],
+  select{
+    height: 56px;
+    font-size: 1.05rem;
+  }
+}
