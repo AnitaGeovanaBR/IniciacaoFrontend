@@ -8,23 +8,23 @@
     "net10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\vinic\\.nuget\\packages\\": {},
+    "C:\\Users\\gustavo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vinic\\Documents\\IniciacaoFrontend-feature2\\backend\\CalculadoraApi\\CalculadoraApi.csproj",
+      "projectUniqueName": "C:\\Users\\gustavo\\projects\\IniciacaoFrontend\\backend\\CalculadoraApi\\CalculadoraApi.csproj",
       "projectName": "CalculadoraApi",
-      "projectPath": "C:\\Users\\vinic\\Documents\\IniciacaoFrontend-feature2\\backend\\CalculadoraApi\\CalculadoraApi.csproj",
-      "packagesPath": "C:\\Users\\vinic\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vinic\\Documents\\IniciacaoFrontend-feature2\\backend\\CalculadoraApi\\obj\\",
+      "projectPath": "C:\\Users\\gustavo\\projects\\IniciacaoFrontend\\backend\\CalculadoraApi\\CalculadoraApi.csproj",
+      "packagesPath": "C:\\Users\\gustavo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gustavo\\projects\\IniciacaoFrontend\\backend\\CalculadoraApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\vinic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\gustavo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -33,6 +33,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -75,7 +76,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

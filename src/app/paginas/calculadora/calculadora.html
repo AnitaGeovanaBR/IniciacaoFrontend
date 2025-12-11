@@ -11,20 +11,26 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div>
       <label for="primeiroNumero">Primeiro número</label>
-      <input id="primeiroNumero" type="number" formControlName="primeiroNumero" />
+      <input id="primeiroNumero" type="text" formControlName="primeiroNumero" />
+      <span class="erro-validacao" *ngIf="form.get('primeiroNumero')?.hasError('naoENumero') && form.get('primeiroNumero')?.touched">
+        Apenas números são permitidos
+      </span>
     </div>
 
     <div>
       <label for="operacao">Operação</label>
       <select id="operacao" formControlName="operacao">
-        <option disabled selected>Selecione</option>
+        <option disabled>Selecione</option>
         <option *ngFor="let op of operacoes" [value]="op.valor">{{op.nome}} ({{op.valor}})</option>
       </select>
     </div>
 
     <div>
       <label for="segundoNumero">Segundo número</label>
-      <input id="segundoNumero" type="number" formControlName="segundoNumero" />
+      <input id="segundoNumero" type="text" formControlName="segundoNumero" />
+      <span class="erro-validacao" *ngIf="form.get('segundoNumero')?.hasError('naoENumero') && form.get('segundoNumero')?.touched">
+        Apenas números são permitidos
+      </span>
     </div>
 
     <div class="actions">
@@ -33,9 +39,21 @@
   </form>
 
   <div *ngIf="resultado !== null" class="resultado">
-    <strong>Resultado:</strong> {{ resultado }}
+    <strong>{{ expressao }}</strong>
   </div>
-  <div *ngIf="erro" class="erro">
-    <strong>{{ erro }}</strong>
+</div>
+
+<div *ngIf="mostrarModal" class="modal-overlay" (click)="fecharModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Erro</h2>
+      <button class="modal-close" (click)="fecharModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>{{ erro }}</p>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn" (click)="fecharModal()">Fechar</button>
+    </div>
   </div>
 </div>
