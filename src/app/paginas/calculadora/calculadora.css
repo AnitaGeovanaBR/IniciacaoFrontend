@@ -1,0 +1,203 @@
+.calculadora-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 380px;
+    margin: 40px auto;
+    background-color: #e6e6e6; 
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.calculadora-display {
+    background-color: #dbe4c7; 
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-align: right;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.calculadora-display h2 {
+    color: #333;
+    font-size: 2em;
+    font-weight: normal;
+    margin: 0;
+    word-break: break-all;
+}
+
+.calculadora-inputs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+    height: 40px;
+}
+
+.input-label-compact {
+    flex-grow: 1;
+    display: block;
+    margin: 0;
+}
+
+.select-label {
+    flex-grow: 0.5; 
+}
+
+input[type="text"], .operacao-display {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    color: #333;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.input-ativo {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
+    border-color: #007bff;
+}
+
+.calculadora-teclado {
+    display: flex;
+    gap: 10px;
+}
+
+.teclado-operacoes {
+    display: flex;
+    flex-direction: column; 
+    gap: 5px; 
+    flex: 0 0 25%; 
+    order: 2; 
+}
+
+.op-button {
+    flex-grow: 1; 
+    background-color: #ff9500; 
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.teclado-numerico {
+    flex: 1; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    order: 1; 
+}
+
+.teclado-button {
+    padding: 15px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f0f0f0; 
+    color: #333;
+    font-size: 1.1em;
+    transition: background-color 0.1s;
+}
+
+.teclado-button:hover:not(:disabled) {
+    background-color: #dcdcdc;
+}
+
+.clear-button {
+    background-color: #ffcc00; 
+    font-weight: bold;
+}
+
+.calculate-button {
+
+    grid-column: span 2; 
+    
+    background-color: #5cb85c; 
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.calculate-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #666;
+}
+
+.erro {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.erro-messages {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.custom-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: 0.5; 
+}
+.discreet-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 1050;
+    width: 90%;
+    max-width: 300px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+}
+
+.discreet-modal .modal-content {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.discreet-modal .modal-body p {
+    color: #d9534f; 
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.discreet-modal .modal-footer {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.discreet-modal .btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}

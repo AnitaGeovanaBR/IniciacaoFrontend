@@ -1,83 +1,104 @@
 <div class="calculadora-container">
-    <h1>Calculadora Fera</h1>
+    <h1 class="text-center">Calculator3000</h1>
+    
+    <div class="calculadora-display">
+        <h2>{{ resultado }}</h2>
+    </div>
 
     <form [formGroup]="calculadoraForm" (ngSubmit)="calcular()">
 
-        <label>
-            Primeiro número
-            <input type="number" formControlName="primeiroNumero">
-        </label>
+        <div class="calculadora-inputs">
+            <label class="input-label-compact">
+                <input 
+                    type="text" 
+                    formControlName="primeiroNumero" 
+                    placeholder="Num 1" 
+                    readonly 
+                    (click)="setCampoAtivo('primeiro')"
+                    [class.input-ativo]="campoAtivo === 'primeiro'"
+                >
+            </label>
+            
+            <label class="input-label-compact select-label">
+                <input 
+                    type="text" 
+                    formControlName="operacao" 
+                    placeholder="Op"
+                    readonly 
+                    class="operacao-display"
+                >
+            </label>
+            
+            <label class="input-label-compact">
+                <input 
+                    type="text" 
+                    formControlName="segundoNumero" 
+                    placeholder="Num 2"
+                    readonly
+                    (click)="setCampoAtivo('segundo')"
+                    [class.input-ativo]="campoAtivo === 'segundo'"
+                >
+            </label>
+        </div>
         
-        <div class="erro" *ngIf="calculadoraForm.get('primeiroNumero')?.invalid && calculadoraForm.get('primeiroNumero')?.touched">
-            O primeiro número é obrigatório.
+        <div class="erro-messages">
+            <div class="erro" *ngIf="calculadoraForm.get('primeiroNumero')?.invalid && calculadoraForm.get('primeiroNumero')?.touched">
+                O primeiro número é obrigatório.
+            </div>
+            <div class="erro" *ngIf="calculadoraForm.get('operacao')?.invalid && calculadoraForm.get('operacao')?.touched">
+                A operação é obrigatória.
+            </div>
+            <div class="erro" *ngIf="calculadoraForm.get('segundoNumero')?.invalid && calculadoraForm.get('segundoNumero')?.touched">
+                O segundo número é obrigatório.
+            </div>
         </div>
-
-        <label>
-            Operação
-            <select formControlName="operacao">
-                <option value="">Selecione uma operação</option>
-                <option *ngFor="let op of operacoes" [value]="op.valor">{{ op.nome }}</option>
-            </select>
-        </label>
-
-        <div class="erro" *ngIf="calculadoraForm.get('operacao')?.invalid && calculadoraForm.get('operacao')?.touched">
-            A operação é obrigatória.
+        
+        <div class="calculadora-teclado">
+            
+            <div class="teclado-numerico">
+                <button type="button" class="teclado-button clear-button" (click)="handleKeypadInput('C')">C</button>
+                <button type="button" class="teclado-button clear-button" (click)="handleKeypadInput('DEL')">&#x2190;</button> 
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('.')">.</button>
+                
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('7')">7</button>
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('8')">8</button>
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('9')">9</button>
+                
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('4')">4</button>
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('5')">5</button>
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('6')">6</button>
+                
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('1')">1</button>
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('2')">2</button>
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('3')">3</button>
+                
+                <button type="button" class="teclado-button" (click)="handleKeypadInput('0')">0</button>
+                <button type="submit" class="teclado-button calculate-button" [disabled]="calculadoraForm.invalid">=</button>
+                
+            </div>
+            
+            <div class="teclado-operacoes">
+                <button 
+                    type="button" 
+                    class="teclado-button op-button"
+                    *ngFor="let op of operacoes$ | async" 
+                    (click)="selectOperationKeypad(op.valor)"
+                >
+                    {{ op.valor }}
+                </button>
+            </div>
         </div>
-
-        <label>
-            Segundo número
-            <input type="number" formControlName="segundoNumero">
-        </label>
-
-        <div class="erro" *ngIf="calculadoraForm.get('segundoNumero')?.invalid && calculadoraForm.get('segundoNumero')?.touched">
-            O segundo número é obrigatório.
-        </div>
-
-        <button type="submit" [disabled]="calculadoraForm.invalid">
-            Calcular
-        </button>
     </form>
-
-    <hr>
-    
-    <h2>Resultado: {{ resultado }}</h2>
-
 </div>
 
-<style>
-.calculadora-container {
-    padding: 20px;
-    border: 1px solid #ccc;
-    max-width: 400px;
-    margin: 20px auto;
-}
-label {
-    display: block;
-    margin-bottom: 15px;
-}
-input[type="number"], select {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    box-sizing: border-box;
-}
-.erro {
-    color: red;
-    font-size: 0.8em;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-}
-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-</style>
+<div *ngIf="mostarModalErro" class="discreet-modal">
+    <div class="custom-modal-backdrop" (click)="fecharModal()"></div> 
+    <div class="modal-content">
+        <div class="modal-body">
+            <p>{{ mensagemErro }}</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="fecharModal()">Fechar</button>
+        </div>
+    </div>
+</div>

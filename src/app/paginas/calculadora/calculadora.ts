@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CalculadoraService } from '../../../services/calculadora.service'; 
-import { Operacao } from '../../../models/operacao.model'; 
+import { Operacao, CalculoRequest } from '../../../models/operacao.model'; 
+import { Observable } from 'rxjs'; 
 
 @Component({
   selector: 'app-calculadora',
@@ -13,7 +14,14 @@ export class Calculadora implements OnInit {
   calculadoraForm!: FormGroup; 
   resultado: number | string = 'Aguardando cálculo...';
   
+  operacoes$!: Observable<Operacao[]>; 
+
   operacoes: Operacao[] = []; 
+
+  mostarModalErro: boolean = false;
+  mensagemErro: string = '';
+
+  campoAtivo: 'primeiro' | 'segundo' = 'primeiro';
 
   constructor(private calculadoraService: CalculadoraService) { } 
 
@@ -22,28 +30,79 @@ export class Calculadora implements OnInit {
  
       primeiroNumero: new FormControl(null, [
         Validators.required,
-        Validators.min(0) 
       ]),
       operacao: new FormControl('', [
         Validators.required 
       ]),
       segundoNumero: new FormControl(null, [
         Validators.required,
-        Validators.min(0) 
       ])
     });
     
     this.carregarOperacoes();
   }
+
+  setCampoAtivo(campo: 'primeiro' | 'segundo'): void {
+    this.campoAtivo = campo;
+  }
+handleKeypadInput(value: string): void {
+    const controlName = this.campoAtivo === 'primeiro' ? 'primeiroNumero' : 'segundoNumero';
+    const control = this.calculadoraForm.get(controlName);
+    if (!control) return;
+
+    let currentValue = (control.value || '').toString();
+
+    if (value === 'C') {
+        control.setValue(null);
+        return;
+    }
+        if (value === 'DEL') {
+        if (currentValue && currentValue !== 'null') {
+            currentValue = currentValue.slice(0, -1);
+            control.setValue(currentValue === '' ? null : currentValue);
+        }
+        return; 
+    }
+    if (value === '.') {
+        if (!currentValue.includes('.')) {
+            currentValue = (currentValue === 'null' || currentValue === '') ? '0.' : currentValue + '.';
+            control.setValue(currentValue);
+        }
+        return;
+    } 
+    
+    if (currentValue === 'null' || currentValue === '') {
+        currentValue = value; 
+    } else {
+        currentValue += value;
+    }
+    
+    control.setValue(currentValue);
+}
+
+  selectOperationKeypad(op: string): void {
+      this.calculadoraForm.get('operacao')?.setValue(op);
+      this.setCampoAtivo('segundo'); 
+  }
+
+  fecharModal(){
+    this.mostarModalErro = false;
+    this.mensagemErro = '';
+  }
+  
+  
   carregarOperacoes() { 
-      this.calculadoraService.getOperacoes().subscribe({
+          this.operacoes$ = this.calculadoraService.getOperacoes();
+          this.operacoes$.subscribe({
           next: (dados: Operacao[]) => {
               this.operacoes = dados;
               console.log('Operações carregadas do backend:', this.operacoes);
           },
           error: (erro) => {
               console.error('Erro ao carregar operações:', erro);
-              this.resultado = 'Erro ao carregar operações da API.';
+              this.mensagemErro = 'Ocorreu um erro ao carregar as operações, tente novamente ou mais tarde.';
+              this.mostarModalErro= true;
+              this.resultado = 'Erro ao carregar operações.';
           }
       });
   }
@@ -61,30 +120,27 @@ export class Calculadora implements OnInit {
     const num1 = parseFloat(primeiroNumero);
     const num2 = parseFloat(segundoNumero);
 
-    let res: number;
+    const request: CalculoRequest ={
+        primeiroNumero: num1,
+        operacao: operacao,
+        segundoNumero: num2
+    };
 
-    switch (operacao) { 
-      case '+': 
-        res = num1 + num2;
-        break;
-      case '-': 
-        res = num1 - num2;
-        break;
-      case '*': 
-        res = num1 * num2;
-        break;
-      case '/': 
-        if (num2 === 0) {
-          this.resultado = 'Erro: Divisão por zero não é permitida.';
-          return;
-        }
-        res = num1 / num2;
-        break;
-      default:
-        this.resultado = 'Operação inválida.';
-        return;
-    }
-
-    this.resultado = res;
-  }
+    this.calculadoraService.calcular(request).subscribe({
+        next: (response) => {
+            const opSimbolo = this.operacoes.find(op => op.valor === operacao)?.valor || operacao;
+            this.resultado = ` (${num1} ${opSimbolo} ${num2} = ${response.resultado})`;
+    },
+        error: (erro) => {
+            console.error('Erro no cálculo:', erro);
+            if (erro.status === 400 && erro.error && erro.error.message) {
+                this.mensagemErro = erro.error.message;
+            } else {
+                this.mensagemErro = 'Ocorreu um erro, tente novamente ou mais tarde.';
+            }
+            this.mostarModalErro = true;
+            this.resultado = 'Erro no cálculo.';
+          }
+    });
+  }   
 }
